@@ -3,7 +3,9 @@ export class Counts {
   files = 0;
 
   toString() {
-    return `\n${this.comma(this.dirs)} ${this.dirs != 1 ? "directories" : "directory"}, ${this.comma(this.files)} ${this.files != 1 ? "files" : "file"}`;
+    return `\n${this.comma(this.dirs)} ${
+      this.dirs != 1 ? "directories" : "directory"
+    }, ${this.comma(this.files)} ${this.files != 1 ? "files" : "file"}`;
   }
   comma(value: number) {
     let result = "";
