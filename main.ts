@@ -24,14 +24,18 @@ try {
   }
 }
 
-console.log(args.initialPath);
-const levelFlags = new Array<boolean>();
-levelFlags.push(true);
-const counts = new Counts();
-await printTree(args.initialPath, counts, args, levelFlags);
+const counts = printTree(args)
 console.log(counts.toString());
 
-async function printTree(
+async function printTree(args: Args): Promise<Counts> {
+  console.log(args.initialPath);
+  const levelFlags = new Array<boolean>();
+  levelFlags.push(true);
+  const counts = new Counts();
+  await printTreeLevel(args.initialPath, counts, args, levelFlags);
+  return counts;
+}
+async function printTreeLevel(
   path: string,
   counts: Counts,
   args: Args,
@@ -48,7 +52,7 @@ async function printTree(
       if (i === upperBound) levelFlags[levelFlags.length - 1] = false;
       levelFlags.push(true);
       if (args.levelLimit == 0 || level <= args.levelLimit) {
-        await printTree(
+        await printTreeLevel(
           mod.join(path, entry.name),
           counts,
           args,
