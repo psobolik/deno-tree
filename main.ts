@@ -1,4 +1,4 @@
-import * as mod from "https://deno.land/std@0.186.0/path/mod.ts";
+import * as path_mod from "https://deno.land/std@0.186.0/path/mod.ts";
 import { Args } from "./args.ts";
 import { Counts } from "./counts.ts";
 import { ArgParser, HelpText } from "./argParser.ts";
@@ -56,7 +56,7 @@ async function printTreeLevel(
     console.log(
       `${
         getPrefixString(levelFlags, i == upperBound, args.prefixSet)
-      }${entry.name}`,
+      }${entry.name}${entry.isDirectory ? path_mod.SEP : ""}`,
     );
     if (entry.isDirectory) {
       ++counts.dirs;
@@ -64,7 +64,7 @@ async function printTreeLevel(
       levelFlags.push(true);
       if (args.levelLimit == 0 || level < args.levelLimit) {
         await printTreeLevel(
-          mod.join(path, entry.name),
+          path_mod.join(path, entry.name),
           counts,
           args,
           levelFlags,
